@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Zep Cloud graph search", "version": "2" },
+  "servers": [ { "url": "https://api.getzep.com" } ],
+  "paths": {
+    "/api/v2/graph/search": {
+      "post": {
+        "operationId": "graphSearch",
+        "summary": "Search a user's or a graph's edges (facts), nodes or episodes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["query"],
+                "properties": {
+                  "query": { "type": "string" },
+                  "user_id": { "type": "string" },
+                  "graph_id": { "type": "string" },
+                  "scope": { "type": "string", "enum": ["edges", "nodes", "episodes"], "default": "edges" },
+                  "limit": { "type": "integer", "default": 10, "maximum": 50 },
+                  "reranker": { "type": "string", "enum": ["rrf", "mmr", "node_distance", "episode_mentions", "cross_encoder"], "default": "rrf" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Matching edges, nodes or episodes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "edges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": { "type": "string" },
+                          "name": { "type": "string" },
+                          "fact": { "type": "string" },
+                          "score": { "type": "number" },
+                          "created_at": { "type": "string" },
+                          "valid_at": { "type": "string", "nullable": true },
+                          "invalid_at": { "type": "string", "nullable": true },
+                          "expired_at": { "type": "string", "nullable": true },
+                          "source_node_uuid": { "type": "string" },
+                          "target_node_uuid": { "type": "string" },
+                          "episodes": { "type": "array", "items": { "type": "string" } }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

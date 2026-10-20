@@ -1,0 +1,15 @@
+# Zep Cloud is keyed. The API key is sent as `Authorization: Api-Key <key>` (apis/zep.yml). Which
+# Zep user's graph the world reads is the `user_id` in producers/zep.yml — a request-body value,
+# which the engine does not yet interpolate from the credential store — so it is set there.
+- name: zep
+  displayName: Zep Cloud
+  description: Zep's temporal memory graph — facts with the window in which they held.
+  getKeyUrl: https://app.getzep.com/
+  fields:
+    - variable: ZEP_API_KEY
+      displayName: API key
+  validate:
+    api: zep
+    operation: graphSearch
+    args: { query: test, user_id: "<zep user id>", scope: edges, limit: 1 }
+    refusedOn: [401, 403]

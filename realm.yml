@@ -1,0 +1,11 @@
+name: zep-memory
+description: >-
+  Zep Cloud's temporal knowledge graph under the shared Memory label: the facts Zep has extracted
+  about a user, each with the window in which it held (valid_at / invalid_at), recalled through
+  Zep's own graph search and ranked by its score, so "what do you remember about X" answers from
+  Zep alongside the assistant's own memory and every other system.
+version: 0.1.0
+# The provenance label every node this realm owns carries beside its type: :ZepMemory:Memory:Zep.
+realmLabel: Zep
+author: Embabel
+tags: [memory, zep, graphiti, temporal]

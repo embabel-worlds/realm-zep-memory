@@ -1,0 +1,10 @@
+# Zep Cloud's graph search, as a minimal vendored OpenAPI document (Zep publishes SDKs rather than
+# a spec; the one operation this realm calls is written from the v2 API reference,
+# https://help.getzep.com/sdk-reference/graph/search). Zep authenticates with
+# `Authorization: Api-Key <key>` — not a bearer scheme — which is why it is a declared header.
+- url: zep-openapi.json
+  name: zep
+  type: openapi
+  headers:
+    Authorization: "Api-Key ${ZEP_API_KEY}"
+  operation-ids: [graphSearch]
