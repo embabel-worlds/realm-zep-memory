@@ -46,6 +46,20 @@ Without the key the API is skipped at world load and the edge answers empty, rep
 A plain read returns ACTIVE facts; pin `{status:'SUPERSEDED'}` on the node to read what Zep no
 longer holds. That is the `Memory` lifecycle, declared once in the default world and inherited here.
 
+## The ladder
+
+The shared label is a migration path, and this realm is one rung of it.
+
+- **Mirror** — install the realm, bind `ZEP_API_KEY` and set `user_id`; Zep's facts answer under
+  `:Memory` beside the assistant's own from the next query.
+- **Compare** — `memory_bakeoff {topic}` lists what each system recalls, one row per memory with
+  `system` naming it; `memory_systems` counts per system.
+- **Promote** — `gateway.memory.promote({text, source, id})` copies a fact into the assistant's own
+  memory; the row then reads `status: PROMOTED` and leaves plain `:Memory` reads.
+- **Retire** — uninstall the realm; every `:Memory` query keeps answering from the systems that remain.
+
+`source` (`'zep'`) and `status` are stamped by the producer's `compute:` block, as the table above says.
+
 ## Graphiti
 
 Zep's graph engine is [Graphiti](https://github.com/getzep/graphiti), and a self-hosted Graphiti
